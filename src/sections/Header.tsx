@@ -55,7 +55,7 @@ export const Header = () => {
               {isAuthenticated && !isLoading && (
                 <>
                   <button className="bg-black text-white px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight">
-                    <Link href="/test">Enter Hive</Link>
+                    <Link href="/main">Enter Hive</Link>
                   </button>
 
                   <UserButton />

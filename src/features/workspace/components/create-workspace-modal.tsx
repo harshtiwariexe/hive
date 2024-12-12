@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const CreateWorkspaceModal = () => {
   const [open, setOpen] = useCreateWorkspaceModal();
@@ -21,10 +22,22 @@ export const CreateWorkspaceModal = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    mutate(
+      { name },
+      {
+        onSuccess(id) {
+          toast.success("Workspace created...");
+          router.push(`/workspace/${id}`);
+          handleClose();
+        },
+      },
+    );
   };
 
   const handleClose = () => {
     setOpen(false);
+    setName("");
   };
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -32,7 +45,7 @@ export const CreateWorkspaceModal = () => {
         <DialogHeader>
           <DialogTitle>Add a workspace</DialogTitle>
         </DialogHeader>
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
